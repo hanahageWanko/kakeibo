@@ -67,7 +67,7 @@ class DbManager
     {
         if (!issset($this->repositories[$repository_name])) {
             $repository_class = $repository_name . 'Repository';
-
+            $con = $this->getConnectionForRepository($repository_name);
             $repository = new $repository_class($con);
 
             $this->repositories[$repository_name] = $repository;

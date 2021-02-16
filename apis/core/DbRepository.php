@@ -23,11 +23,20 @@
 
       public function fetch($sql, $params = [])
       {
-          return $this->execute($sql, $params)->getch(PDO::FETCH_ASSOC);
+          return $this->execute($sql, $params)->fetch(PDO::FETCH_ASSOC);
       }
 
       public function fetchAll($sql, $params = [])
       {
           return $this->execute($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
+      }
+
+      public function fetchByAugumentItem($tableName, $fetchName, $fetchValue) {
+        $sql = "
+          select from $tableName 
+          where $fetchName = :$fetchName
+        ";
+
+        return $this->fetch($sql, ["$fetchName" => $fetchValue]);
       }
   }
