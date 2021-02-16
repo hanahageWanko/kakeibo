@@ -72,8 +72,8 @@
 
         if(0 === strpos($request_uri, $script_name)) {
           return $script_name;
-        } else if (0 === strpos($request_name, dirname($script_name))) {
-          return rtrim(driname($script_name), '/');
+        } else if (0 === strpos($request_uri, dirname($script_name))) {
+          return rtrim(dirname($script_name), '/');
         }
       }
 

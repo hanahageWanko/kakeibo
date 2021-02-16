@@ -30,7 +30,7 @@ class DbManager
             $params['dsn'],
             $params['user'],
             $params['password'],
-            $params['potions']
+            $params['options']
         );
 
         $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

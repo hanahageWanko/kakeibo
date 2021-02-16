@@ -4,7 +4,7 @@
       protected $content;
       protected $status_code = 200;
       protected $status_text = 'OK';
-      protected $status_headers = [];
+      protected $http_headers = [];
 
       public function send()
       {
