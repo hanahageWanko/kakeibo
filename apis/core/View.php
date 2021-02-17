@@ -13,13 +13,13 @@
       $this->layout_variables[$name] = $value;
     }
 
+    // PHP-HTML-Templateを使用する場合
     public function render($_path, $_variables = [], $_layout = false) {
       $_file = $this->base_dir . '/' . $_path . '.php';
       extract(array_merge($this->defaults, $_variables));
 
       ob_start();
       ob_implicit_flush(0);
-
       require $_file;
 
       $content = ob_get_clean();
