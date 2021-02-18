@@ -1,3 +1,3 @@
 <?php
 // TODO
- echo json_encode('sample');
+echo $this->escape($_token);
