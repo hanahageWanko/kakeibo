@@ -9,8 +9,9 @@ class Core extends Application
     public function routing()
     {
         // users
-        Router::set('users/read', function () {
-            View::make('users/read');
+        Router::set('user/read', function () {
+            View::make('user/read', 'userRepository');
+            $this->findController('AccountController');
         });
 
         // Router::set('users/insert', function () {

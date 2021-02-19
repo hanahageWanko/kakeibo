@@ -30,14 +30,4 @@
       {
           return $this->execute($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
       }
-
-      public function fetchByAugumentItem($tableName, $fetchName, $fetchValue)
-      {
-          $sql = "
-          select from $tableName 
-          where $fetchName = :$fetchName
-        ";
-
-          return $this->fetch($sql, ["$fetchName" => $fetchValue]);
-      }
   }

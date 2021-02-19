@@ -6,9 +6,9 @@ class Router
         global $Routes;
         $uri = $_SERVER['REQUEST_URI'];
         if (!in_array(explode('?', $uri)[0], $Routes, true)) {
-            return 0;
+            return false;
         } else {
-            return 1;
+            return true;
         }
     }
 

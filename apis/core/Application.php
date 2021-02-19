@@ -29,7 +29,8 @@ class Application
 
     protected function initialize()
     {
-        $this->session = new Session();
+        $this->response   = new Response();
+        $this->session    = new Session();
         $this->db_manager = new DbManager();
     }
 
@@ -76,5 +77,23 @@ class Application
     public function getModelDir()
     {
         return $this->getRootDir() . '/models';
+    }
+
+    public function findController($controller_class)
+    {
+        if (!class_exists($controller_class)) {
+            $controller_file = $this->getControllerDir() . '/' . $controller_class . '.php';
+            if (!is_readable($controller_file)) {
+                return false;
+            } else {
+                require_once $controller_file;
+
+                if (!class_exists($controller_class)) {
+                    return false;
+                }
+            }
+        }
+
+        return new $controller_class($this);
     }
 }
