@@ -34,6 +34,8 @@ class Router
 
     public static function set($route, $closure)
     {
+        // TODO: 例外処理
+
         if (!$_GET) {
             self::registerRoute($route);
             $closure->__invoke();
