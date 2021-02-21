@@ -3,7 +3,7 @@ class View
 {
     public static function make($view, $model = null, $controller = null)
     {
-        if (Route::isRouteValid()) {
+        if (Router::isRouteValid()) {
             if($model) {
               require_once(__DIR__ . "/../models/$model.php");
             }

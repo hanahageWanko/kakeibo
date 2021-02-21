@@ -1,5 +1,5 @@
 <?php
-class Route
+class Router
 {
     public static function isRouteValid()
     {
@@ -34,15 +34,25 @@ class Route
 
     public static function set($route, $closure)
     {
+        if (!$_GET) {
+            self::registerRoute($route);
+            $closure->__invoke();
+            return;
+        }
         if ($_SERVER['REQUEST_URI'] == "/".$route) {
             self::registerRoute($route);
             $closure->__invoke();
-        } elseif (explode('?', $_SERVER['REQUEST_URI'])[0] == "/".$route) {
+            return;
+        }
+        if (explode('?', $_SERVER['REQUEST_URI'])[0] == "/".$route) {
             self::registerRoute($route);
             $closure->__invoke();
-        } elseif ($_GET['url'] == explode('/', $route)[0]) {
+            return;
+        }
+        if ($_GET['url'] == explode('/', $route)[0]) {
             self::registerRoute(self::dyn($route));
             $closure->__invoke();
+            return;
         }
     }
 

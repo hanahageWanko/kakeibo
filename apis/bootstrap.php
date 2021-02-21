@@ -1,11 +1,15 @@
 <?php
-  require 'vendor/autoload.php';
   require 'core/ClassLoader.php';
-  $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-  $dotenv->load();
 
   $loader = new ClassLoader();
-  $loader->registerDir(__DIR__ . '/core');
-  $loader->registerDir(__DIR__ . '/models');
+  $loader->registerDir(dirname(__FILE__).'/core');
+  $loader->registerDir(dirname(__FILE__).'/models');
   $loader->register();
+  // users
+  Router::set('users', function () {
+    View::make('users/index');
+  });
 
+  Router::set('users/read', function () {
+    View::make('users/read');
+  });

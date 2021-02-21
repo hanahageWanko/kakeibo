@@ -1,5 +1,5 @@
 <IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteCond %{REQUEST_FILENSME} !-f
-  RewriteRule ^(.*)$ index.php [QSA,L]
+RewriteEngine On
+#RewriteRule ^([^/]*)/([^/]*)$ index.php?url=$1&username=$2 [L]
+RewriteRule ^([^/]+)/? index.php?url=$1 [L,QSA]
 </IfModule>
