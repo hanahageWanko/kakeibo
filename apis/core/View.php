@@ -1,17 +1,16 @@
 <?php
 class View
 {
-    public static function make($view, $model, $controller)
+    public static function make($view, $model = null, $controller = null)
     {
         if (Route::isRouteValid()) {
-            if(!$model) {
-              $model = $view;
+            if($model) {
+              require_once(__DIR__ . "/../models/$model.php");
             }
-            if(!$controller) {
-              $controller = $view;
+            if($controller) {
+              require_once(__DIR__ . "/../controllers/$controller.php");
             }
-            require_once(__DIR__ . "/../controllers/$controller.php");
-            require_once(__DIR__ . "/../models/$model.php");
+            
             require_once(__DIR__ . "/../views/$view.php");
             return 1;
         }
