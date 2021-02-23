@@ -1,2 +1,2 @@
 <?php
-echo "aaaaa";
+echo "read.php";

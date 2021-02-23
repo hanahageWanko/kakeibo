@@ -13,17 +13,17 @@ class Core extends Application
             View::make('users/read');
         });
 
-        Router::set('users/insert', function () {
-            View::make('users/insert');
-        });
+        // Router::set('users/insert', function () {
+        //     View::make('users/insert');
+        // });
 
-        Router::set('users/update', function () {
-            View::make('users/update');
-        });
+        // Router::set('users/update', function () {
+        //     View::make('users/update');
+        // });
 
-        Router::set('users/delete', function () {
-            View::make('users/delete');
-        });
+        // Router::set('users/delete', function () {
+        //     View::make('users/delete');
+        // });
     }
 
     public function configure()

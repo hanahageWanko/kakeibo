@@ -10,7 +10,7 @@ class View
             if($controller) {
               require_once(__DIR__ . "/../controllers/$controller.php");
             }
-            
+           var_dump($view); 
             require_once(__DIR__ . "/../views/$view.php");
             return 1;
         }
