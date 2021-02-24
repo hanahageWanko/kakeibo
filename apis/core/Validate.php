@@ -47,6 +47,16 @@ class Validate
         }
     }
 
+    public static function justSizeStr($str, $int, $message)
+    {
+        if ($int !== mb_strlen($str)) {
+            echo json_encode(self::resultMessage(0, 422, $message));
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public static function mailFormat($email, $message)
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {

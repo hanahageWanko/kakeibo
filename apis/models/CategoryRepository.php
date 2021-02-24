@@ -1,7 +1,7 @@
 <?php
   class CategoryRepository extends DbRepository
   {
-      public function insert($category_name)
+      public function insert($user_id, $color, $category_name)
       {
           try {
               $tablename = $_ENV["TB_CATEGORY"];
@@ -12,10 +12,12 @@
                   echo json_encode(Validate::resultMessage(0, 422, 'This CategoryName already in use!'));
                   return;
               }
-              $sql = "INSERT INTO $tablename(category_name, created_at, updated_at)
-            VALUES (:category_name, :created_at, :updated_at)";
+              $sql = "INSERT INTO $tablename(category_name, user_id, color, created_at, updated_at)
+            VALUES (:category_name, :user_id, :color, :created_at, :updated_at)";
               $params = [
                 ':category_name' => $category_name,
+                ':user_id'       => $user_id,
+                ':color'         => $color,
                 ':created_at'    => $this->getNow(),
                 ':updated_at'    => $this->getNow()
               ];
@@ -26,7 +28,7 @@
           }
       }
 
-      public function update($id, $category_name)
+      public function update($id, $user_id, $color, $category_name)
       {
           try {
               $tablename = $_ENV["TB_CATEGORY"];
@@ -43,15 +45,19 @@
                   return;
               }
               $postItem = [
-                  ':id'         => $id,
-                  ':category_name'  => $this->updateBindValue($getTargetRecode, $category_name),
-                  ':created_at' => $getTargetRecode['created_at'],
-                  ':updated_at' => $this->getNow()
+                  ':id'             => $id,
+                  ':category_name'  => $category_name,
+                  ':user_id'        => $getTargetRecode['user_id'],
+                  ':color'          => $color,
+                  ':created_at'     => $getTargetRecode['created_at'],
+                  ':updated_at'     => $this->getNow()
               ];
 
               $sql = "UPDATE $tablename
                       SET 
                         category_name = :category_name,
+                        user_id       = :user_id,
+                        color         = :color,
                         created_at    = :created_at,
                         updated_at    = :updated_at
                       WHERE id = :id";
