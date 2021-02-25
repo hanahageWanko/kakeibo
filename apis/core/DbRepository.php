@@ -39,7 +39,7 @@
       }
 
       public function getNow() {
-        $now = new DateTime();
-        return $now->format('Y-m-d h:m:s');
+        date_default_timezone_set('Asia/Tokyo');
+        return date('Y-m-d H:i:s');
       }
   }
