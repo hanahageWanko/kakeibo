@@ -1,9 +1,11 @@
 <template>
   <div>
     <Navigation />
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
     <img alt="Vue logo" src="./assets/logo.png" />
     <Read :msg="message" />
-    {{ data }}
+    <router-view />
   </div>
 </template>
 
@@ -29,7 +31,6 @@ export default defineComponent({
       try {
         await BaseRepository.get("/user/read?id=5").then((res) => {
           data.userData = res.data;
-          console.log(data.userData);
         });
       } catch (error) {
         console.error(error);
@@ -38,7 +39,6 @@ export default defineComponent({
 
     onMounted(() => {
       getUserInfo();
-      console.log(data);
     });
 
     const message = "Welcome to Your Vue.js + TypeScript App";
