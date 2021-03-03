@@ -60,13 +60,13 @@
                   return;
               }
               $postItem = [
-            ':id'         => $id,
-            ':auth_name'  => $this->updateBindValue($getTargetRecode, $auth_name),
-            ':email'      => $this->updateBindValue($getTargetRecode, $email),
-            ':password'   => $getTargetRecode['password'],
-            ':updated_at' => $this->getNow(),
-            ':created_at' => $getTargetRecode['created_at']
-          ];
+									':id'         => $id,
+									':auth_name'  => $this->updateBindValue($getTargetRecode, $auth_name),
+									':email'      => $this->updateBindValue($getTargetRecode, $email),
+									':password'   => $getTargetRecode['password'],
+									':updated_at' => $this->getNow(),
+									':created_at' => $getTargetRecode['created_at']
+							];
 
               $sql = "UPDATE $tablename
                   SET 
