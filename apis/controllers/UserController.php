@@ -12,7 +12,6 @@ class UserController extends Controller
     }
 
     public function insertAction() {
-      $this->getContents();
       // TODO: フロント実実装時にコメントをとる
       // $token = $this->request->getPost('_token');
       // if (!$this->checkCsrfToken('user/insert', $token)) {
