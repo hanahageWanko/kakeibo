@@ -10,7 +10,9 @@
 
       public function setConnection($con)
       {
+        
           $this->con = $con;
+        
       }
 
       public function execute($sql, $params = [])

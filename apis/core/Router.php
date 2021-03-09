@@ -1,75 +1,51 @@
 <?php
 class Router
 {
-    public static function isRouteValid()
+    protected $routes;
+    public function __construct($definitions)
     {
-        global $Routes;
-        $uri = $_SERVER['REQUEST_URI'];
-        if (!in_array(explode('?', $uri)[0], $Routes, true)) {
-            return false;
-        } else {
-            return true;
-        }
+        $this->routes = $this->compileRoutes($definitions);
     }
 
-    // Register the route in a global variable.
-    private static function registerRoute($route)
+    public function compileRoutes($definitions)
     {
-        global $Routes;
-        $Routes[] = "/".$route;
+        $routes = [];
+
+        foreach ($definitions as $url => $params) {
+            // URLを'/’で分割
+            $tokens = explode('/', ltrim($url, '/'));
+            foreach ($tokens as $i => $token) {
+                // ':'で始まる文字列が存在した場合は、':'以下の文字列を抜き出し、正規表現の形式に直す
+                if (0 === strpos($token, ':')) {
+                    $name = substr($token, 1);
+                    $token = '(?P<' . $name . '>[^/]+)';
+                }
+                $tokens[$i] = $token;
+            }
+
+            $pattern = '/' . implode('/', $tokens);
+            $routes[$pattern] = $params;
+        }
+
+        return $routes;
     }
-    // Dynamic routing
-    public static function dyn($dyn_routes)
+
+    public function resolve($path_info)
     {
-        $route_components = explode('/', $dyn_routes);
-        $uri_components = explode('/', substr($_SERVER['REQUEST_URI'], strlen(__DIR__)-1));
-        for ($i = 0; $i < count($route_components); $i++) {
-            if ($i+1 <= count($uri_components)-1) {
-                $route_components[$i] = str_replace("<$i>", $uri_components[$i+1], $route_components[$i]);
+        // $path_infoの先頭が'/'でない場合に'/'を付与する
+        if ('/' !== substr($path_info, 0, 1)) {
+            $path_info = '/' . $path_info;
+        }
+
+        
+        foreach ($this->routes as $pattern => $params) {
+            if (preg_match('#^' . $pattern . '$#', $path_info, $matches)) {
+                // 正規表現にマッチした文字列を配列合致してルーティングパラメータを返す
+                $params = array_merge($params, $matches);
+                return $params;
             }
         }
-        $route = implode($route_components, array('/'));
-        return $route;
-    }
 
-    public static function set($route, $closure)
-    {
-        // TODO: 例外処理
-
-        if (!$_GET) {
-            self::registerRoute($route);
-            $closure->__invoke();
-            return;
-        }
-        if ($_SERVER['REQUEST_URI'] == "/".$route) {
-            self::registerRoute($route);
-            $closure->__invoke();
-            return;
-        }
-        if (explode('?', $_SERVER['REQUEST_URI'])[0] == "/".$route) {
-            self::registerRoute($route);
-            $closure->__invoke();
-            return;
-        }
-        if ($_GET['url'] == explode('/', $route)[0]) {
-            self::registerRoute(self::dyn($route));
-            $closure->__invoke();
-            return;
-        }
-    }
-
-    public static function get()
-    {
-        global $Routes;
-        $uri = $_SERVER['REQUEST_URI'];
-        if (!in_array(explode('?', $uri)[0], $Routes, true)) {
-            die('Invalid route.');
-        }
-        return $uri;
-    }
-
-    public function run()
-    {
-        $this->get();
+        return false;
     }
 }

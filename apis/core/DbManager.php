@@ -15,6 +15,17 @@ class DbManager
         }
     }
 
+    public function __isset($name) {
+        return isset($this->repositories[$name]);
+    }
+
+    public function __unset($name) {
+        unset($this->repositories[$name]);
+
+        throw new BadMethodCallException('__unset() is not supported');
+    }
+
+
     public function connect($name, $params)
     {
         $params = array_merge(
@@ -66,11 +77,10 @@ class DbManager
   
     public function get($repository_name)
     {
-        if (!issset($this->repositories[$repository_name])) {
+        if (!isset($this->repositories[$repository_name])) {
             $repository_class = $repository_name . 'Repository';
             $con = $this->getConnectionForRepository($repository_name);
             $repository = new $repository_class($con);
-  
             $this->repositories[$repository_name] = $repository;
         }
   
