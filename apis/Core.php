@@ -1,38 +1,27 @@
 <?php
 class Core extends Application
 {
+    //protected $login_action = ['account', 'signin'];
+
     public function getRootDir()
     {
         return __DIR__;
     }
 
-    public function routing()
+    protected function registerRoutes()
     {
-        // users
-        Router::set('user/read', function () {
-            View::make('user/read', 'userRepository');
-            $this->findController('AccountController');
-        });
-
-        // Router::set('users/insert', function () {
-        //     View::make('users/insert');
-        // });
-
-        // Router::set('users/update', function () {
-        //     View::make('users/update');
-        // });
-
-        // Router::set('users/delete', function () {
-        //     View::make('users/delete');
-        // });
+        return [
+        '/user/read'
+            => ['controller' => 'user', 'action' => 'read'],
+    ];
     }
 
-    public function configure()
+    protected function configure()
     {
         $this->db_manager->connect('master', [
-        'dsn' => "mysql:dbname={$_ENV['DB_NAME']};host={$_ENV['DB_HOST']}",
-        'user' =>$_ENV['DB_USER'],
-        'password' => $_ENV['DB_PASSWORD']
-      ]);
+            'dsn' => "mysql:dbname={$_ENV['DB_NAME']};host={$_ENV['DB_HOST']}",
+            'user' =>$_ENV['DB_USER'],
+            'password' => $_ENV['DB_PASSWORD']
+          ]);
     }
 }
