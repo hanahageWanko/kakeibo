@@ -13,8 +13,7 @@ class Response
         foreach ($this->http_headers as $name => $value) {
             header("{$name}: {$value}");
         }
-
-        echo $this->content;
+        return $this->content;
     }
 
     public function setContent($content)
