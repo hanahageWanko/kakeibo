@@ -68,6 +68,7 @@ abstract class Controller
         }
 
         $path = $this->controller_name . '/' .$template;
+
         return $view->render($path, $variables, $layout);
     }
 

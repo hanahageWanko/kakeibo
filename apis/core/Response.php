@@ -13,6 +13,7 @@ class Response
         foreach ($this->http_headers as $name => $value) {
             header("{$name}: {$value}");
         }
+
         return $this->content;
     }
 
@@ -26,6 +27,7 @@ class Response
         $this->status_code = $status_code;
         $this->status_text = $status_text;
     }
+
 
     public function setHttpHeader($name, $value)
     {
