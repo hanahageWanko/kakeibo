@@ -95,7 +95,7 @@ abstract class Application
 
             $controller = $params['controller'];
             $action = $params['action'];
-            
+
             $this->runAction($controller, $action, $params);
         // } catch (HttpNotFoundException $e) {
         //     $this->render404Page($e);
@@ -119,7 +119,7 @@ abstract class Application
         }
         $content = $controller->run($action, $params);
 
-
+        
         $this->response->setContent($content);
     }
 

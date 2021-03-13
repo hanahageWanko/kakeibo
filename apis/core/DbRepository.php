@@ -10,9 +10,9 @@
 
       public function setConnection($con)
       {
-        
+
           $this->con = $con;
-        
+          
       }
 
       public function execute($sql, $params = [])
@@ -23,13 +23,15 @@
           return $stmt;
       }
 
-      public function fetch($sql, $params = [])
+      public function fetch($sql)
       {
-          return $this->execute($sql, $params)->fetch(PDO::FETCH_ASSOC);
-      }
-
-      public function fetchAll($sql, $params = [])
-      {
-          return $this->execute($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
+          $stmt = $this->execute($sql);
+          if ($stmt->rowCount() > 0) {
+              $result = [];
+              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                  array_push($result, $row);
+              }
+              return $result;
+          }
       }
   }

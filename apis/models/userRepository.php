@@ -22,14 +22,16 @@
       ]);
     }
 
-    public function read() {
+    public function read($id = "") {
       $tablename = $_ENV["TB_USER"];
-      $sql = "SELECT * FROM $tablename";
+      $sql = is_numeric($id) 
+              ? "SELECT * FROM $tablename WHERE id = ${id}" 
+              : "SELECT * FROM $tablename";
       return $this->fetch($sql);
     }
 
 
-
+    
     private function hashPassword($password) {
       return password_hash($password, PASSWORD_DEFAULT);
     }

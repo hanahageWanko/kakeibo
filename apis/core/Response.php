@@ -9,12 +9,10 @@ class Response
     public function send()
     {
         header("Access-Control-Allow-Origin: *");
-        header("HTTP/2 {$this->status_code} {$this->status_text}");
-        foreach ($this->http_headers as $name => $value) {
-            header("{$name}: {$value}");
-        }
+        header("Access-Control-Allow-Headers: access");
+        header("Access-Control-Allow-Credentials: true");
+        header("Content-Type: application/json; charset=UTF-8");
 
-        return $this->content;
     }
 
     public function setContent($content)
