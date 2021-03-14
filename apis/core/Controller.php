@@ -137,7 +137,7 @@ abstract class Controller
     {
         $key = 'csrf_tokens/' . $form_name;
         $tokens = $this->session->get($key, []);
-
+        
         if (false !== ($pos = array_search($token, $tokens, true))) {
             unset($tokens[$pos]);
             $this->session->set($key, $tokens);
@@ -146,5 +146,9 @@ abstract class Controller
         }
 
         return false;
+    }
+
+    public function getContents() {
+        return json_decode(file_get_contents("php://input"));
     }
 }

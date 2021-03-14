@@ -13,6 +13,10 @@ class Core extends Application
         return [
         '/user/read'
             => ['controller' => 'user', 'action' => 'read'],
+        '/user/insert'
+            => ['controller' => 'user', 'action' => 'insert'],
+        // '/generateToken'
+        //     => ['controller' => 'access', 'action' => 'generateToken'],
     ];
     }
 

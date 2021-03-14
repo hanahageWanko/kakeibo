@@ -11,15 +11,23 @@ class Validate
     }
 
 
-    public static function dataValidate($data)
+    public static function dataValidate($data, $compare_keys)
     {
+        
         $flag = true;
+        $i = 0;
         foreach ($data as $key => $value) {
+
             if ((!isset($value)) || empty(trim($value))) {
                 $flag = false;
             }
+            $i += 1;
         }
-        return $flag ? true : false;
+        if( count($compare_keys) !== $i) {
+            var_dump('入った');
+            $flag = false;
+        }
+        return $flag ? true : false; 
     }
 
     public static function lessThanStr($str, $int, $message)
