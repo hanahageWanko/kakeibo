@@ -11,6 +11,12 @@ class Core extends Application
     protected function registerRoutes()
     {
         return [
+        '/auth/read'
+            => ['controller' => 'auth', 'action' => 'read'],
+        '/auth/insert'
+            => ['controller' => 'auth', 'action' => 'insert'],
+        '/auth/update'
+            => ['controller' => 'auth', 'action' => 'update'],
         '/user/read'
             => ['controller' => 'user', 'action' => 'read'],
         '/user/insert'
