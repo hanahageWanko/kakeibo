@@ -23,6 +23,8 @@ class Core extends Application
             => ['controller' => 'user', 'action' => 'insert'],
         '/user/update'
             => ['controller' => 'user', 'action' => 'update'],
+        '/category/insert'
+            => ['controller' => 'category', 'action' => 'insert'],
         '/access/generateToken'
             => ['controller' => 'access', 'action' => 'generateToken'],
     ];
