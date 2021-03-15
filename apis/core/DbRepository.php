@@ -19,19 +19,27 @@
       {
           $stmt = $this->con->prepare($sql);
           $stmt->execute($params);
-
           return $stmt;
       }
 
       public function fetch($sql)
       {
-          $stmt = $this->execute($sql);
-          if ($stmt->rowCount() > 0) {
-              $result = [];
-              while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                  array_push($result, $row);
-              }
-              return $result;
-          }
+        $stmt = $this->execute($sql);
+        if ($stmt->rowCount() > 0) {
+            $result = [];
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($result, $row);
+            }
+            return $result;
+        }
+      }
+
+      public function updateBindValue($old_value, $new_value) {
+        return !empty($new_value) ? $new_value : $old_value;
+      }
+
+      public function getNow() {
+        $now = new DateTime();
+        return $now->format('Y-m-d h:m:s');
       }
   }
