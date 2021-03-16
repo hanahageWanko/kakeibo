@@ -1,7 +1,7 @@
 <?php
   class UserRepository extends DbRepository
   {
-      public function insert($email, $password, $user_name, $auth_id = null)
+      public function insert($email, $password, $user_name, $auth_id, $is_auth = 0)
       {
           try {
               $tablename = $_ENV["TB_USER"];
@@ -14,14 +14,15 @@
               } else {
                   $password = $this->hashPassword($password);
 
-                  $sql = "INSERT INTO $tablename(user_name, email, password, auth_id, created_at, updated_at)
-                        VALUES (:user_name, :email, :password, :auth_id, :created_at, :updated_at)";
+                  $sql = "INSERT INTO $tablename(user_name, email, password, auth_id, is_auth, created_at, updated_at)
+                        VALUES (:user_name, :email, :password, :auth_id, :is_auth,  :created_at, :updated_at)";
 
                   $this->execute($sql, [
                 ':user_name'  => $user_name,
                 ':email'      => $email,
                 ':password'   => $password,
                 ':auth_id'    => $auth_id,
+                ':is_auth'    => $is_auth,
                 ':created_at' => $this->getNow(),
                 ':updated_at' => $this->getNow()
               ]);
@@ -66,6 +67,7 @@
             ':email'      => $this->updateBindValue($getTargetRecode, $email),
             ':password'   => $getTargetRecode['password'],
             ':auth_id'    => $getTargetRecode['auth_id'],
+            ':is_auth'    => $getTargetRecode['is_auth'],
             ':updated_at' => $this->getNow(),
             ':created_at' => $getTargetRecode['created_at']
           ];
@@ -76,6 +78,7 @@
                     email       = :email,
                     password    = :password,
                     auth_id     = :auth_id,
+                    is_auth     = :is_auth,
                     updated_at  = :updated_at,
                     created_at  = :created_at
                   WHERE id = :id";
