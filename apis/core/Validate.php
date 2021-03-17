@@ -76,4 +76,13 @@ class Validate
             return true;
         }
     }
+
+    public static function limitHalfSizeNumber($int, $message) {
+        if (!preg_match("/^[0-9]+$/", $int)) {
+            echo json_encode(self::resultMessage(0, 405, $message));
+            return false; 
+        } else {
+            return true;
+        }
+    }
 };
