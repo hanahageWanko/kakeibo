@@ -7,7 +7,7 @@ class AuthController extends Controller
         'user_name' => '',
         'password'  => '',
         // '_token'    => $this->generateCsrfToken('auth/read'),
-        'read_data' => $this->db_manager->get('Auth')->read()
+        'getAuthRepository' => $this->db_manager->get('Auth')
       ]);
     }
 
