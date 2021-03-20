@@ -19,7 +19,7 @@ class AuthController extends Controller
         //     return $this->redirect('auth/insert');
         // }
         return $this->render([
-       'getUserRepository' => $this->db_manager->get('Auth'),
+       'getAuthRepository' => $this->db_manager->get('Auth'),
        'getData' => $this->getContents()
       ]);
     }
@@ -32,7 +32,7 @@ class AuthController extends Controller
         //     return $this->redirect('auth/update');
         // }
         return $this->render([
-        'getUserRepository' => $this->db_manager->get('Auth'),
+        'getAuthRepository' => $this->db_manager->get('Auth'),
         'getData' => $this->getContents()
        ]);
     }
