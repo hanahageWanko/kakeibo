@@ -33,6 +33,8 @@ class Core extends Application
             => ['controller' => 'category', 'action' => 'update'],
         '/category/delete'
             => ['controller' => 'category', 'action' => 'delete'],
+        '/expenses/read'
+            => ['controller' => 'expenses', 'action' => 'read'],
         '/expenses/insert'
             => ['controller' => 'expenses', 'action' => 'insert'],
         '/expenses/update'
