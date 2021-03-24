@@ -17,6 +17,8 @@ class Core extends Application
             => ['controller' => 'auth', 'action' => 'insert'],
         '/auth/update'
             => ['controller' => 'auth', 'action' => 'update'],
+        '/auth/delete'
+            => ['controller' => 'auth', 'action' => 'delete'],
         '/user/read'
             => ['controller' => 'user', 'action' => 'read'],
         '/user/insert'

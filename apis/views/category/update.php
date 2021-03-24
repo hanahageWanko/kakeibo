@@ -7,7 +7,7 @@ if (!Validate::dataValidate($getData, $fields['fields'])) {
     return;
 }
 
-if (!Validate::justSizeStr($getData->color, 7, 'The color must be 7 characters.')) {
+if (!Validate::justSizeStr($getData->color, 6, 'The color must be 6 characters.')) {
     return;
 }
 
