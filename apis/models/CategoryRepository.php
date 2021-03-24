@@ -6,12 +6,12 @@
           try {
               $tablename = $_ENV["TB_CATEGORY"];
               // 同じカテゴリ名称が既にDBに登録されているか確認
-              $checkUseName = $this->checkRecodeByName($tablename, $category_name);
+              // $checkUseName = $this->checkRecodeByName($tablename, $category_name);
 
-              if ($checkUseName->rowCount() > 0) {
-                  echo json_encode(Validate::resultMessage(0, 422, 'This CategoryName already in use!'));
-                  return;
-              }
+              // if ($checkUseName->rowCount() > 0) {
+              //     echo json_encode(Validate::resultMessage(0, 422, 'This CategoryName already in use!'));
+              //     return;
+              // }
               $sql = "INSERT INTO $tablename(category_name, user_id, color, created_at, updated_at)
             VALUES (:category_name, :user_id, :color, :created_at, :updated_at)";
               $params = [
@@ -39,11 +39,11 @@
                   return;
               }
 
-              $checkUseCategoyName = $this->checkRecodeByCategoryName($tablename, $category_name);
-              if ($checkUseCategoyName->rowCount() > 0 && $getTargetRecode['category_name'] !== $category_name) {
-                  echo json_encode(Validate::resultMessage(0, 422, 'This CategoryName already in use!'));
-                  return;
-              }
+              // $checkUseCategoyName = $this->checkRecodeByCategoryName($tablename, $category_name);
+              // if ($checkUseCategoyName->rowCount() > 0 && $getTargetRecode['category_name'] !== $category_name) {
+              //     echo json_encode(Validate::resultMessage(0, 422, 'This CategoryName already in use!'));
+              //     return;
+              // }
               $postItem = [
                   ':id'             => $id,
                   ':category_name'  => $category_name,
@@ -64,6 +64,20 @@
 
               $this->execute($sql, $postItem);
               echo json_encode(Validate::resultMessage(0, 200, 'Data updated successfully'));
+          } catch (PDOException $e) {
+              echo json_encode(Validate::resultMessage(0, 500, $e->getMessage()));
+              return;
+          }
+      }
+
+      public function delete($id)
+      {
+          try {
+              $tablename = $_ENV["TB_CATEGORY"];
+              $sql = "DELETE FROM $tablename WHERE id = :id";
+
+              $this->execute($sql, [':id' => $id]);
+              echo json_encode(Validate::resultMessage(0, 200, 'Data deleted successfully'));
           } catch (PDOException $e) {
               echo json_encode(Validate::resultMessage(0, 500, $e->getMessage()));
               return;
