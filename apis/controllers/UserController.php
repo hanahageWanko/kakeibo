@@ -36,4 +36,17 @@ class UserController extends Controller
         'getData' => $this->getContents()
        ]);
     }
+
+    public function deleteAction()
+    {
+        // TODO: フロント実実装時にcsrfチェック用処理を作成すること
+        // $token = $this->request->getPost('_token');
+        // if (!$this->checkCsrfToken('user/update', $token)) {
+        //     return $this->redirect('/user/update');
+        // }
+        return $this->render([
+        'getUserRepository' => $this->db_manager->get('User'),
+        'getData' => $this->getContents()
+       ]);
+    }
 }

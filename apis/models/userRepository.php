@@ -90,6 +90,31 @@
           }
       }
 
+      public function delete($id)
+      {
+          $user_table = $_ENV['TB_USER'];
+          $expenses_table = $_ENV['TB_EXPENSES'];
+          $category_table = $_ENV['TB_CATEGORY'];
+          $deletePost = "DELETE
+													$user_table
+													,$expenses_table
+													,$category_table
+												FROM
+													$user_table
+													,$expenses_table
+													,$category_table
+												WHERE $user_table.id = :id
+												AND $expenses_table.user_id = $user_table.id
+												AND $category_table.user_id = $user_table.id
+											";
+          try {
+              $this->execute($deletePost, [":id" => $id]);
+              echo json_encode(Validate::resultMessage(0, 200, 'Post Deleted Successfuly'));
+          } catch (PDOException $e) {
+              echo json_encode(Validate::resultMessage(0, 500, $e->getMessage()));
+          }
+      }
+
       private function checkRecodeByEmail($tablename, $email)
       {
           // 同じメールアドレスが既にDBに登録されているか確認
