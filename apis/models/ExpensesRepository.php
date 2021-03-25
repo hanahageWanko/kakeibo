@@ -60,6 +60,19 @@
           }
       }
 
+      public function delete($id) {
+        try {
+            $tablename = $_ENV["TB_EXPENSES"];
+            $sql = "DELETE FROM $tablename WHERE id = :id";
+
+            $this->execute($sql, [':id' => $id]);
+            echo json_encode(Validate::resultMessage(0, 200, 'Data deleted successfully'));
+        } catch (PDOException $e) {
+            echo json_encode(Validate::resultMessage(0, 500, $e->getMessage()));
+            return;
+        }
+      }
+
       private function checkRecodeById($tablename, $id)
       {
           // 同じメールアドレスが既にDBに登録されているか確認

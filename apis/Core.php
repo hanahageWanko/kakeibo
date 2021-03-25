@@ -37,6 +37,8 @@ class Core extends Application
             => ['controller' => 'expenses', 'action' => 'insert'],
         '/expenses/update'
             => ['controller' => 'expenses', 'action' => 'update'],
+        '/expenses/delete'
+            => ['controller' => 'expenses', 'action' => 'delete'],
         '/access/generateToken'
             => ['controller' => 'access', 'action' => 'generateToken'],
     ];
