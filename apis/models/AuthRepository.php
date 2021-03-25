@@ -153,21 +153,21 @@
           $category_table = $_ENV['TB_CATEGORY'];
           $deletePost = "DELETE
 													$auth_table
-          								,$user_table
-          								,$expenses_table
-         									,$category_table
-												 FROM
-												 	$auth_table
-          								,$user_table
-          								,$expenses_table
-         									,$category_table
-												 WHERE $auth_table.id = :id
-												 AND $auth_table.id = $user_table.auth_id
-												 AND $expenses_table.user_id = $user_table.id
-												 AND $category_table.user_id = $user_table.id
-												"; 
+													,$user_table
+													,$expenses_table
+													,$category_table
+												FROM
+													$auth_table
+													,$user_table
+													,$expenses_table
+                          ,$category_table
+												WHERE $auth_table.id = :id
+												AND $auth_table.id = $user_table.auth_id
+												AND $expenses_table.user_id = $user_table.id
+												AND $category_table.user_id = $user_table.id
+                        ";
           try {
-						$this->execute($deletePost, [":id" => $id]);
+              $this->execute($deletePost, [":id" => $id]);
               echo json_encode(Validate::resultMessage(0, 200, 'Post Deleted Successfuly'));
           } catch (PDOException $e) {
               echo json_encode(Validate::resultMessage(0, 500, $e->getMessage()));
