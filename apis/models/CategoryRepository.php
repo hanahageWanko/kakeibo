@@ -28,6 +28,18 @@
           }
       }
 
+      public function read($user_id)
+      {
+          try {
+            $tablename = $_ENV["TB_CATEGORY"];
+            $sql = "SELECT * FROM $tablename WHERE user_id = :user_id";
+            return $this->execute($sql, [":user_id" => $user_id])->fetchAll(PDO::FETCH_ASSOC);
+          } catch (PDOException $e) {
+              echo json_encode(Validate::resultMessage(0, 500, $e->getMessage()));
+              return;
+          }
+      }
+
       public function update($id, $user_id, $color, $category_name)
       {
           try {
