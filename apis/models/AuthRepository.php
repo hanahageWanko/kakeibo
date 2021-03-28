@@ -53,10 +53,22 @@
 
       public function read($id = "")
       {
-          $tablename = $_ENV["TB_AUTH"];
+          $table_user = $_ENV["TB_USER"];
+          $table_auth = $_ENV["TB_AUTH"];
+          $fetchSql = "SELECT 
+                          a.id,
+                          u.id,
+                          u.user_name,
+                          u.email,
+                          u.auth_id
+                         FROM $table_user as u
+                         JOIN $table_auth as a
+                         ON a.id = u.id
+                        ";
+
           $sql = is_numeric($id)
-              ? "SELECT * FROM $tablename WHERE id = ${id}"
-              : "SELECT * FROM $tablename";
+              ? $fetchSql . "AND a.id = ${id}"
+              : $fetchSql;
           return $this->fetch($sql);
       }
 
