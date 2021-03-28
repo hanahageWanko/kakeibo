@@ -51,25 +51,22 @@
           }
       }
 
-      public function read($id = "")
+      public function read($id)
       {
           $table_user = $_ENV["TB_USER"];
           $table_auth = $_ENV["TB_AUTH"];
-          $fetchSql = "SELECT 
-                          a.id,
-                          u.id,
-                          u.user_name,
-                          u.email,
-                          u.auth_id
-                         FROM $table_user as u
-                         JOIN $table_auth as a
-                         ON a.id = u.id
-                        ";
-
-          $sql = is_numeric($id)
-              ? $fetchSql . "AND a.id = ${id}"
-              : $fetchSql;
-          return $this->fetch($sql);
+          $sql = "SELECT 
+                    a.id,
+                    u.id,
+                    u.user_name,
+                    u.email,
+                    u.auth_id
+                  FROM $table_user as u
+                  JOIN $table_auth as a
+                  ON a.id = u.id
+                  AND a.id = :id"
+                  ;
+          return $this->execute($sql, [':id' => $id])->fetch(PDO::FETCH_ASSOC);
       }
 
       public function update($auth_id, $email, $user_name)
