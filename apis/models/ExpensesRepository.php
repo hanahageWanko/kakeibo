@@ -25,8 +25,20 @@
 
       public function read($user_id) {
           try {
-              $tablename = $_ENV["TB_EXPENSES"];
-              $sql = "SELECT * FROM $tablename WHERE user_id = :user_id";
+              $expenses_table = $_ENV["TB_EXPENSES"];
+              $category_table = $_ENV["TB_CATEGORY"];
+              $sql = "SELECT
+                        expenses.id
+                        ,expenses.money
+                        ,expenses.user_id
+                        ,category.category_name
+                        ,category.color
+                        ,expenses.created_at
+                        ,expenses.updated_at
+                      FROM $expenses_table as expenses
+                      JOIN $category_table as category
+                      ON expenses.category_id = category.id
+                      WHERE expenses.user_id = :user_id";
               return $this->execute($sql, [":user_id" => $user_id])->fetchAll(PDO::FETCH_ASSOC);
           } catch (PDOException $e) {
               echo json_encode(Validate::resultMessage(0, 500, $e->getMessage()));
