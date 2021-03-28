@@ -7,7 +7,7 @@ class UserController extends Controller
         'user_name' => '',
         'password'  => '',
         // '_token'    => $this->generateCsrfToken('user/read'),
-        'read_data' => $this->db_manager->get('User')->read()
+        'getUserRepository' => $this->db_manager->get('User')
       ]);
     }
 

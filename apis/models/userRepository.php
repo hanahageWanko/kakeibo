@@ -34,13 +34,16 @@
           }
       }
 
-      public function read($id = "")
+      public function read($id)
       {
-          $tablename = $_ENV["TB_USER"];
-          $sql = is_numeric($id)
-              ? "SELECT * FROM $tablename WHERE id = ${id}"
-              : "SELECT * FROM $tablename";
-          return $this->fetch($sql);
+          try{
+            $tablename = $_ENV["TB_USER"];
+            $sql = "SELECT * FROM $tablename WHERE id = :id";
+            return $this->execute($sql, [":id" => $id])->fetch(PDO::FETCH_ASSOC);
+          } catch(PDOexption $e) {
+            echo json_encode(Validate::resultMessage(0, 422, 'The information could not be read.'));
+            return;
+          }
       }
 
       public function update($id, $email, $user_name)

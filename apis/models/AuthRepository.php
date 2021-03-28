@@ -53,6 +53,7 @@
 
       public function read($id)
       {
+        try {
           $table_user = $_ENV["TB_USER"];
           $table_auth = $_ENV["TB_AUTH"];
           $sql = "SELECT 
@@ -67,6 +68,10 @@
                   AND a.id = :id"
                   ;
           return $this->execute($sql, [':id' => $id])->fetch(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            echo json_encode(Validate::resultMessage(0, 422, 'The information could not be read.'));
+            return;
+        }
       }
 
       public function update($auth_id, $email, $user_name)
