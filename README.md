@@ -70,3 +70,7 @@
 - オーナーはemailをユニークIDとし、同じemailアドレスを登録することはできない
 - 同じemailアドレスがない場合、authテーブルにInsertを行う
 - Insertが成功した場合、そのIDをuserテーブルのauth_idに挿入し、ユーザーを登録する
+
+## アクセス制限
+- login状態でのみアクセスできるActionはControllerにてlogin_actionsに登録する
+- 上記によって非login状態で該当Actionにアクセスした際に、Coreで指定したaction実行させることができる

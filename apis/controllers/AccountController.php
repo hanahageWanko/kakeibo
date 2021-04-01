@@ -2,12 +2,12 @@
 
 class AccountController extends Controller
 {
-    // protected $auth_actions = ['index', 'signout', 'follow'];
+    protected $auth_actions = ['index', 'signout', 'authenticateAction'];
 
     public function signupAction()
     {
-        if ($this->session->isAuthenticated()) {
-            return $this->redirect('/account');
+        if (!$this->session->isAuthenticated()) {
+            return $this->redirect('/error');
         }
 
         return $this->render([
@@ -19,12 +19,8 @@ class AccountController extends Controller
 
     public function registerAction()
     {
-        if ($this->session->isAuthenticated()) {
-            return $this->redirect('/account');
-        }
-
-        if (!$this->request->isPost()) {
-            $this->forward404();
+        if (!$this->session->isAuthenticated()) {
+            return $this->redirect('/error');
         }
 
         $token = $this->request->getPost('_token');
@@ -32,24 +28,6 @@ class AccountController extends Controller
             return $this->redirect('/account/signup');
         }
 
-        $user_name = $this->request->getPost('user_name');
-        $password = $this->request->getPost('password');
-
-        $errors = [];
-
-        if (!strlen($user_name)) {
-            $errors[] = 'ユーザIDを入力してください';
-        } elseif (!preg_match('/^\w{3,20}$/', $user_name)) {
-            $errors[] = 'ユーザIDは半角英数字およびアンダースコアを3 ～ 20 文字以内で入力してください';
-        } elseif (!$this->db_manager->get('User')->isUniqueUserName($user_name)) {
-            $errors[] = 'ユーザIDは既に使用されています';
-        }
-
-        if (!strlen($password)) {
-            $errors[] = 'パスワードを入力してください';
-        } elseif (4 > strlen($password) || strlen($password) > 30) {
-            $errors[] = 'パスワードは4 ～ 30 文字以内で入力してください';
-        }
 
         if (count($errors) === 0) {
             $this->db_manager->get('User')->insert($user_name, $password);
@@ -69,35 +47,38 @@ class AccountController extends Controller
         ], 'signup');
     }
 
+    // アカウント情報TOP
     public function indexAction()
     {
         $user = $this->session->get('user');
-        $followings = $this->db_manager->get('User')
-            ->fetchAllFollowingsByUserId($user['id']);
-
         return $this->render([
-            'user'       => $user,
-            'followings' => $followings,
+            'user' => $user
         ]);
     }
 
     public function signinAction()
     {
-        if ($this->session->isAuthenticated()) {
-            return $this->redirect('/account');
-        }
+        // if (!$this->session->isAuthenticated()) {
+        //     return $this->redirect('/error');
+        // }
 
+        // $this->db_manager->get('Account')->start();
+
+        $_SESSION['login_key'] =  $this->db_manager->get('Account')->get_token(); // CSRFのトークンを取得する
         return $this->render([
             'user_name' => '',
             'password'  => '',
+            'login_key' => '',
             '_token'    => $this->generateCsrfToken('account/signin'),
+            'getAccountRepository' => $this->db_manager->get('Account'),
+            'getData' => $this->getContents()
         ]);
     }
 
     public function authenticateAction()
     {
         if ($this->session->isAuthenticated()) {
-            return $this->redirect('/account');
+            return $this->redirect('/');
         }
 
         if (!$this->request->isPost()) {
@@ -149,41 +130,12 @@ class AccountController extends Controller
     {
         $this->session->clear();
         $this->session->setAuthenticated(false);
-
-        return $this->redirect('/account/signin');
+        // return $this->render([
+        //   'getUserRepository' => $this->db_manager->get('User')
+        // ]);
+        // return $this->redirect('/account/signin');
     }
 
-    public function followAction()
-    {
-        if (!$this->request->isPost()) {
-            $this->forward404();
-        }
 
-        $following_name = $this->request->getPost('following_name');
-        if (!$following_name) {
-            $this->forward404();
-        }
 
-        $token = $this->request->getPost('_token');
-        if (!$this->checkCsrfToken('account/follow', $token)) {
-            return $this->redirect('/user/' . $following_name);
-        }
-
-        $follow_user = $this->db_manager->get('User')
-            ->fetchByUserName($following_name);
-        if (!$follow_user) {
-            $this->forward404();
-        }
-
-        $user = $this->session->get('user');
-
-        $following_repository = $this->db_manager->get('Following');
-        if ($user['id'] !== $follow_user['id']
-            && !$following_repository->isFollowing($user['id'], $follow_user['id'])
-        ) {
-            $following_repository->insert($user['id'], $follow_user['id']);
-        }
-
-        return $this->redirect('/account');
-    }
 }

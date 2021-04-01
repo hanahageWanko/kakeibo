@@ -1,7 +1,8 @@
 <?php
 class Core extends Application
 {
-    //protected $login_action = ['account', 'signin'];
+    // 各Controllerで同じ変数を定義すると、ログインしていない状態でアクションにアクセスした際にsigninActionじ実行されるようになる
+    protected $login_actions = ['account', 'signin'];
 
     public function getRootDir()
     {
@@ -45,6 +46,10 @@ class Core extends Application
             => ['controller' => 'expenses', 'action' => 'delete'],
         '/access/generateToken'
             => ['controller' => 'access', 'action' => 'generateToken'],
+        '/account/signout'
+            => ['controller' => 'account', 'action' => 'signout'],
+        '/account/signin'
+            => ['controller' => 'account', 'action' => 'signin'],
     ];
     }
 
