@@ -2,12 +2,15 @@
   <div>
     <Navigation />
     ああああああ
+    <div>ユーザID:{{ userId }}</div>
     <router-view />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from "vue";
+import { defineComponent, onMounted, reactive, computed } from "vue";
+// import { defineComponent, computed } from "@vue/runtime-core";
+import { useStore } from "./store/store"; // store/store.tsのものを利用
 import { BaseRepository } from "./axios/Api";
 import Navigation from "./components/Navigation.vue";
 
@@ -21,6 +24,8 @@ export default defineComponent({
     const data: any = reactive({
       userData: [],
     });
+    const store = useStore();
+    const userId = computed(() => store.state.userId);
     // グローバル変数 axios の代わりに先述の設定の色々追加された AxiosInstance を BaseRepository 経由で使用する
     async function getUserInfo() {
       try {
@@ -38,6 +43,7 @@ export default defineComponent({
 
     return {
       data,
+      userId,
     };
   },
 });
