@@ -4,14 +4,9 @@ function createAxiosInstance(){
     // axios.create でいきなり axios を呼んだ時に使われる通信部(AxiosInstance)がインスタンス化される
     const axiosInstance = axios.create({
         // この第一引数オブジェクトで設定を定義
-         
         // axios で通信する時の URL の頭を決める。大体ドメインとAPI用URL接頭辞
         // baseURL: process.env.MIX_BASE_APP_URL,
-        baseURL: "http://127.0.0.1:8080",
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   'X-Requested-With': 'XMLHttpRequest'
-        // },
+        baseURL: process.env.VUE_APP_BASE_URL,
         responseType: 'json'  
     });
      
