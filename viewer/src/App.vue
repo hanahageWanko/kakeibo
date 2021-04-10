@@ -1,10 +1,7 @@
 <template>
   <div>
     <Navigation />
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <Read :msg="message" />
+    ああああああ
     <router-view />
   </div>
 </template>
@@ -12,13 +9,11 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive } from "vue";
 import { BaseRepository } from "./axios/Api";
-import Read from "./components/Read.vue";
 import Navigation from "./components/Navigation.vue";
 
 export default defineComponent({
   name: "App",
   components: {
-    Read,
     Navigation,
   },
 
@@ -41,9 +36,7 @@ export default defineComponent({
       getUserInfo();
     });
 
-    const message = "Welcome to Your Vue.js + TypeScript App";
     return {
-      message,
       data,
     };
   },
@@ -51,12 +44,50 @@ export default defineComponent({
 </script>
 
 <style>
+@import url("https://fonts.googleapis.com/css2?family=Allura&display=swap");
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+span,
+strong,
+b,
+small {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  height: 100vh;
+  width: 100%;
+  color: #534a3c;
+  background-color: #e9e8e6;
+}
+
+.font-allura {
+  font-family: "Allura", cursive;
+}
+
+a,
+a:visited {
+  color: inherit;
+  text-decoration: none;
 }
 </style>
