@@ -74,11 +74,18 @@ small {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   height: 100vh;
   width: 100%;
   color: #534a3c;
   background-color: #e9e8e6;
+}
+
+ul {
+  padding: 0;
+}
+
+li {
+  list-style: none;
 }
 
 .font-allura {

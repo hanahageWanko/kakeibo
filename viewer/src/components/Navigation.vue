@@ -2,8 +2,10 @@
   <div class="navigation">
     <h1 class="font-allura">Expenses</h1>
     <nav class="nav">
-      <router-link to="/user">User</router-link> |
-      <router-link to="/about">About</router-link>
+      <ul>
+        <li><router-link to="/user">User</router-link></li>
+        <li><router-link to="/about">About</router-link></li>
+      </ul>
     </nav>
   </div>
 </template>
@@ -27,5 +29,17 @@ export default defineComponent({});
   font-size: 1.25em;
   /* #F5D1CA
 #B0C9D2 */
+}
+
+.nav li a {
+  padding: 4px 7px;
+}
+
+.nav li {
+  display: inline-block;
+}
+
+.nav li:nth-of-type(n + 2) {
+  border-left: 1px solid #534a3c;
 }
 </style>
