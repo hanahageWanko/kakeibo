@@ -13,6 +13,7 @@ import { defineComponent, onMounted, reactive, computed } from "vue";
 import { useStore } from "./store/store"; // store/store.tsのものを利用
 import { BaseRepository } from "./axios/Api";
 import Navigation from "./components/Navigation.vue";
+import * as MutationTypes from "./store/mutationTypes";
 
 export default defineComponent({
   name: "App",
@@ -26,6 +27,11 @@ export default defineComponent({
     });
     const store = useStore();
     const userId = computed(() => store.state.userId);
+
+    const setUserId = () => {
+      store.commit(MutationTypes.updateUserId, 5);
+    };
+
     // グローバル変数 axios の代わりに先述の設定の色々追加された AxiosInstance を BaseRepository 経由で使用する
     async function getUserInfo() {
       try {
@@ -38,6 +44,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
+      if (store.state.userId === -1) setUserId();
       getUserInfo();
     });
 

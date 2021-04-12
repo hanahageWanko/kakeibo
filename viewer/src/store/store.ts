@@ -1,5 +1,6 @@
 import { InjectionKey } from "vue";
 import { createStore, Store, useStore as baseUseStore } from "vuex";
+import * as MutationTypes from "./mutationTypes";
 
 // stateの型定義
 type userId = number;
@@ -20,4 +21,9 @@ export const store = createStore<State>({
   state: {
     userId: -1,
   },
+  mutations: {
+    [MutationTypes.updateUserId](state, userId: userId) {
+      state.userId = userId
+    }
+  }
 });
