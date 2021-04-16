@@ -1,5 +1,9 @@
 <template>
-  <div class="button" :class="[buttonColor, buttonSize]" @click="onClick">
+  <div
+    class="button"
+    :style="{ 'background-color': buttonColor, color: buttonTextColor }"
+    :class="buttonSize"
+  >
     <slot />
   </div>
 </template>
@@ -16,17 +20,20 @@ export default defineComponent({
   name: "Button",
   components: {},
   props: {
-    color: { type: String, default: "green" },
+    color: { type: String, default: "#00a167" },
+    textcolor: { type: String, default: "" },
     size: { type: String, default: "" },
   },
   setup(props, { emit }) {
     const buttonColor = computed(() => `${props.color}`);
+    const buttonTextColor = computed(() => `${props.textcolor}`);
     const buttonSize = computed(() => `${props.size}`);
     const onClick = () => {
       emit("click");
     };
     return {
       buttonColor,
+      buttonTextColor,
       buttonSize,
       onClick,
     };
@@ -56,6 +63,9 @@ $radius-size: 2px;
 $white: #ffffff;
 $green: #00a167;
 $darkmode-green: #00a167;
+$gray: #a1a1a1;
+$error: #f83b52;
+$warning: #ffce44;
 .button {
   text-align: center;
   padding: $medium;
