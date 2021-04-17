@@ -9,7 +9,7 @@ function createAxiosInstance(){
         withCredentials: true,
         xsrfHeaderName: 'X-CSRF-Token',
         baseURL: process.env.VUE_APP_BASE_URL,
-        responseType: 'json'  
+        // responseType: 'json'  
     });
      
     // interceptors.request.use で送信時に引数に入れた関数が動作する
