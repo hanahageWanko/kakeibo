@@ -6,6 +6,8 @@ function createAxiosInstance(){
         // この第一引数オブジェクトで設定を定義
         // axios で通信する時の URL の頭を決める。大体ドメインとAPI用URL接頭辞
         // baseURL: process.env.MIX_BASE_APP_URL,
+        withCredentials: true,
+        xsrfHeaderName: 'X-CSRF-Token',
         baseURL: process.env.VUE_APP_BASE_URL,
         responseType: 'json'  
     });

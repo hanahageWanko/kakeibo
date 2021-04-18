@@ -17,35 +17,7 @@ class AccountController extends Controller
         ]);
     }
 
-    public function registerAction()
-    {
-        if (!$this->session->isAuthenticated()) {
-            return $this->redirect('/error');
-        }
-
-        $token = $this->request->getPost('_token');
-        if (!$this->checkCsrfToken('account/signup', $token)) {
-            return $this->redirect('/account/signup');
-        }
-
-
-        if (count($errors) === 0) {
-            $this->db_manager->get('User')->insert($user_name, $password);
-            $this->session->setAuthenticated(true);
-
-            $user = $this->db_manager->get('User')->fetchByUserName($user_name);
-            $this->session->set('user', $user);
-
-            return $this->redirect('/');
-        }
-
-        return $this->render([
-            'user_name' => $user_name,
-            'password'  => $password,
-            'errors'    => $errors,
-            '_token'    => $this->generateCsrfToken('account/signup'),
-        ], 'signup');
-    }
+ 
 
     // アカウント情報TOP
     public function indexAction()
@@ -61,15 +33,12 @@ class AccountController extends Controller
         // if (!$this->session->isAuthenticated()) {
         //     return $this->redirect('/error');
         // }
-
         // $this->db_manager->get('Account')->start();
-
-        $_SESSION['login_key'] =  $this->db_manager->get('Account')->get_token(); // CSRFのトークンを取得する
         return $this->render([
             'user_name' => '',
             'password'  => '',
             'login_key' => '',
-            '_token'    => $this->generateCsrfToken('account/signin'),
+            '_token'    => $this->db_manager->get('Account')->get_token(),
             'getAccountRepository' => $this->db_manager->get('Account'),
             'getData' => $this->getContents()
         ]);
