@@ -8,7 +8,9 @@ class Response
 
     public function send()
     {
-        header("Access-Control-Allow-Origin: *");
+        // header("Access-Control-Allow-Origin: *"); // フロントでwithCredentialsパラメータがtrueの時、*は使用できない
+        $allow_url = $_ENV['CORS_URL'];
+        header("Access-Control-Allow-Origin: ${allow_url}");
         header("Access-Control-Allow-Headers: access");
         header("Access-Control-Allow-Credentials: true");
         header("Content-Type: application/json; charset=UTF-8");
