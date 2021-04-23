@@ -1,5 +1,6 @@
 <?php
-  
+ $fields = ['fields' => ['email', 'user_name']];
+ 
   if (!isset($getData->id) || empty($getData->id)) {
     echo json_encode(Validate::resultMessage(0, 422, 'empty id', $fields['fields']));
     return;
@@ -9,7 +10,7 @@
     return;
   }
   
-  if ($getData->password && !Validate::lessThanStr($getData->password, 8, 'Your password must be at least 8 characters long!')) {
+  if ($getData->user_name && !Validate::lessThanStr($getData->user_name, 1, 'Your name must be at least 1 characters long!')) {
     return;
   }
   

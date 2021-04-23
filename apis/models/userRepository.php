@@ -93,7 +93,17 @@
                     created_at  = :created_at
                   WHERE id = :id";
               $this->execute($sql, $postItem);
-              echo json_encode(Validate::resultMessage(0, 200, 'Data updated successfully'));
+
+              $sql = "SELECT * FROM $tablename WHERE id = :id";
+              $fetchItem = $this->execute($sql, [":id" => $id])->fetch(PDO::FETCH_ASSOC);
+              $result['id']         = $fetchItem['id'];
+              $result['user_name']  = $fetchItem['user_name'];
+              $result['email']      = $fetchItem['email'];
+              $result['created_at'] = $fetchItem['created_at'];
+              $result['updated_at'] = $fetchItem['updated_at'];
+              $result['is_auth']    = $fetchItem['is_auth'];
+              echo json_encode($result);
+              // echo json_encode(Validate::resultMessage(0, 200, 'Data updated successfully'));
           } catch (PDOException $e) {
               echo json_encode(Validate::resultMessage(0, 500, $e->getMessage()));
               return;
