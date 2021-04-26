@@ -39,8 +39,15 @@
           try{
             $tablename = $_ENV["TB_USER"];
             $sql = "SELECT * FROM $tablename WHERE id = :id";
-            return $this->execute($sql, [":id" => $id])->fetch(PDO::FETCH_ASSOC);
-          } catch(PDOexption $e) {
+            $fetchItem = $this->execute($sql, [":id" => $id])->fetch(PDO::FETCH_ASSOC);
+              $result['id']         = $fetchItem['id'];
+              $result['user_name']  = $fetchItem['user_name'];
+              $result['email']      = $fetchItem['email'];
+              $result['created_at'] = $fetchItem['created_at'];
+              $result['updated_at'] = $fetchItem['updated_at'];
+              $result['is_auth']    = $fetchItem['is_auth'];
+            return $result;
+          } catch(PDOexception $e) {
             echo json_encode(Validate::resultMessage(0, 422, 'The information could not be read.'));
             return;
           }
