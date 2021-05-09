@@ -67,8 +67,8 @@ export default defineComponent({
     Button,
   },
   setup() {
-    const data: any = reactive({
-      userData: [],
+    const userData: any = reactive({
+      data: [],
     });
     const store = useStore();
     const userId = computed(() => store.state.userId);

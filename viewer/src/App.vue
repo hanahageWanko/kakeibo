@@ -1,7 +1,6 @@
 <template>
   <div>
     <Navigation />
-    ああああああ
     <div>ユーザID:{{ userId }}</div>
     <router-view />
   </div>
@@ -75,6 +74,12 @@ dl,
 dt,
 dd,
 div {
+  margin: 0;
+}
+
+dl,
+dt,
+dd {
   margin: 0;
 }
 
