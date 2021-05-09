@@ -27,6 +27,7 @@ export default defineComponent({
     const store = useStore();
     const userId = computed(() => store.state.userId);
 
+    // TODO: userIDをAPIから取得する
     const setUserId = () => {
       store.commit(MutationTypes.updateUserId, 5);
     };
@@ -68,7 +69,11 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+dl,
+dt,
+dd,
+div {
   margin: 0;
 }
 
@@ -81,10 +86,42 @@ dd {
 span,
 strong,
 b,
-small {
+small,
+input,
+textarea {
   font-family: inherit;
   font-size: inherit;
   font-style: inherit;
+  background: inherit;
+  border: inherit;
+  box-shadow: inherit;
+}
+
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+span,
+strong,
+b,
+small,
+input,
+textarea,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  box-sizing: border-box;
+}
+
+input {
+  display: block;
 }
 
 #app {
@@ -96,6 +133,7 @@ small {
   width: 100%;
   color: #534a3c;
   background-color: #e9e8e6;
+  font-size: 1.25rem;
 }
 
 ul {
@@ -114,5 +152,14 @@ a,
 a:visited {
   color: inherit;
   text-decoration: none;
+}
+
+.form .type-text {
+  border-bottom: 1px solid #534a3c;
+}
+
+.form input[type="text"],
+.form textarea {
+  width: 100%;
 }
 </style>
