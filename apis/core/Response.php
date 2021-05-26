@@ -10,11 +10,13 @@ class Response
     {
         // header("Access-Control-Allow-Origin: *"); // フロントでwithCredentialsパラメータがtrueの時、*は使用できない
         $allow_url = $_ENV['CORS_URL'];
+        header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token, Authorization, Accept,charset,boundary,Content-Length');
         header("Access-Control-Allow-Origin: ${allow_url}");
-        header("Access-Control-Allow-Headers: access");
         header("Access-Control-Allow-Credentials: true");
         header("Content-Type: application/json; charset=UTF-8");
 
+      
     }
 
     public function setContent($content)
