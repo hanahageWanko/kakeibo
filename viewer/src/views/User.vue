@@ -4,51 +4,49 @@
       <form class="user-info form">
         <dl>
           <dt>ユーザー名</dt>
-          <dd>
-            <input
-              type="text"
-              class="type-text"
-              v-model="userData.data.user_name"
-            />
+          <dd class="type-text">
+            <input type="text" v-model="userData.data.user_name" />
+            <span class="icon-box small">
+              <fa icon="pen" class="icon"></fa>
+            </span>
           </dd>
         </dl>
         <dl>
           <dt>Email</dt>
-          <dd>
-            <input
-              type="text"
-              class="type-text"
-              v-model="userData.data.email"
-            />
+          <dd class="type-text">
+            <input type="text" v-model="userData.data.email" />
+            <span class="icon-box small">
+              <fa icon="pen" class="icon"></fa>
+            </span>
           </dd>
         </dl>
         <dl>
           <dt>権限</dt>
-          <dd>
-            <span class="type-text">{{
+          <dd class="type-text">
+            <span>{{
               userData.data.is_auth !== "1" ? "一般ユーザー" : "管理者"
             }}</span>
           </dd>
         </dl>
         <dl>
           <dt>登録日</dt>
-          <dd>
-            <span class="type-text">
+          <dd class="type-text">
+            <span>
               {{ userData.data.created_at }}
             </span>
           </dd>
         </dl>
         <dl>
           <dt>更新日</dt>
-          <dd>
-            <span class="type-text"> {{ userData.data.updated_at }}</span>
+          <dd class="type-text">
+            <span> {{ userData.data.updated_at }}</span>
           </dd>
         </dl>
       </form>
     </div>
     <div class="button-area">
-      <Button class="button">編集する</Button>
-      <div class="button">削除する</div>
+      <Button class="button" @click="UpdateUserInfo()">更新する</Button>
+      <Button class="button" color="#a1a1a1">削除する</Button>
     </div>
   </div>
 </template>
@@ -87,11 +85,10 @@ export default defineComponent({
 
     async function UpdateUserInfo() {
       try {
-        await BaseRepository.get(`/user/update?id=${userId.value}`).then(
-          (res) => {
-            userData.data = res.data;
-          }
-        );
+        console.log("x");
+        await BaseRepository.post(`/user/update`, userData.data).then((res) => {
+          userData.data = res.data;
+        });
       } catch (error) {
         console.error(error);
       }
@@ -149,12 +146,6 @@ export default defineComponent({
   display: block;
   width: 100%;
   text-align: left;
-}
-
-.user-info dd::before {
-  content: ":";
-  display: inline-block;
-  padding-right: 0.5em;
 }
 
 .button-area {

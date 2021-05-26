@@ -32,20 +32,21 @@ export default defineComponent({
       store.commit(MutationTypes.updateUserId, 5);
     };
 
-    // グローバル変数 axios の代わりに先述の設定の色々追加された AxiosInstance を BaseRepository 経由で使用する
-    async function getUserInfo() {
-      try {
-        await BaseRepository.get("/user/read?id=5").then((res) => {
-          data.userData = res.data;
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    }
+    // // グローバル変数 axios の代わりに先述の設定の色々追加された AxiosInstance を BaseRepository 経由で使用する
+    // async function getUserInfo() {
+    //   try {
+    //     await BaseRepository.get("/user/read?id=5").then((res) => {
+    //       console.log(res);
+    //       data.userData = res.data;
+    //     });
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // }
 
     onMounted(() => {
       if (store.state.userId === -1) setUserId();
-      getUserInfo();
+      // getUserInfo();
     });
 
     return {
@@ -56,7 +57,7 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Allura&display=swap");
 html,
 body {
@@ -83,6 +84,11 @@ dd {
   margin: 0;
 }
 
+input,
+textarea {
+  border: none;
+}
+
 span,
 strong,
 b,
@@ -93,8 +99,28 @@ textarea {
   font-size: inherit;
   font-style: inherit;
   background: inherit;
-  border: inherit;
   box-shadow: inherit;
+  color: inherit;
+}
+
+.icons {
+  width: 100%;
+  display: block;
+}
+
+.icon-box {
+  &.small {
+    width: 18px !important;
+    height: 18px;
+  }
+  &.medium {
+    width: 24px !important;
+    height: 24px;
+  }
+  &.large {
+    width: 28px !important;
+    height: 28px;
+  }
 }
 
 div,
@@ -133,7 +159,7 @@ input {
   width: 100%;
   color: #534a3c;
   background-color: #e9e8e6;
-  font-size: 1.25rem;
+  font-size: 16px;
 }
 
 ul {
